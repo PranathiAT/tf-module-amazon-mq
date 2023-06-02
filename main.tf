@@ -36,13 +36,11 @@ resource "aws_instance" "rabbitmq" {
   subnet_id = var.subnets[0]
   vpc_security_group_ids = aws_security_group.sg.id
   root_block_device {
-    encrypted = true
+    encrypted  = true
     kms_key_id = var.kms_arn
+  }
     user_data = base64encode(templatefile("${path.module}/userdata.sh", {
       rabbitmq_appuser_password =data.aws_ssm_parameter.rabbitmq_appuser_password
     }))
-
-  }
-
 
 }
